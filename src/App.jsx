@@ -1,71 +1,122 @@
-function App() {
+import { useEffect } from 'react'
+import { Routes, Route, Link, useLocation } from 'react-router-dom'
+import Home from './components/pages/Home'
+import Properties from './components/pages/Properties'
+import PropertyDetails from './components/pages/PropertyDetails'
+import Services from './components/pages/Services'
+import About from './components/pages/About'
+import Contact from './components/pages/Contact'
+import Booking from './components/pages/Booking'
+import Terms from './components/pages/Terms'
+import Privacy from './components/pages/Privacy'
+
+function ScrollToTop() {
+  const { pathname } = useLocation()
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+  return null
+}
+
+function Navbar() {
+  const navItems = [
+    { to: '/', label: 'الرئيسية' },
+    { to: '/properties', label: 'العقارات' },
+    { to: '/services', label: 'الخدمات' },
+    { to: '/about', label: 'من نحن' },
+    { to: '/contact', label: 'تواصل معنا' },
+  ]
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-      {/* Subtle pattern overlay */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.05),transparent_50%)]"></div>
-
-      <div className="relative min-h-screen flex items-center justify-center p-8">
-        <div className="max-w-2xl w-full">
-          {/* Header with Flames icon */}
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center justify-center mb-6">
-              <img
-                src="/flame-icon.svg"
-                alt="Flames"
-                className="w-24 h-24 drop-shadow-[0_0_25px_rgba(59,130,246,0.5)]"
-              />
-            </div>
-
-            <h1 className="text-5xl font-bold text-white mb-4 tracking-tight">
-              Flames Blue
-            </h1>
-
-            <p className="text-xl text-blue-200 mb-6">
-              Build applications through conversation
-            </p>
+    <header className="sticky top-0 z-50 backdrop-blur bg-slate-900/70 border-b border-white/10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+        <Link to="/" className="flex items-center gap-3 group">
+          <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-yellow-400 to-yellow-600 ring-2 ring-yellow-500/30 shadow-lg"></div>
+          <div className="text-right">
+            <p className="text-white font-bold leading-tight">Promparty Rent</p>
+            <p className="text-xs text-yellow-300/80 leading-tight">عقارات بمعايير فاخرة</p>
           </div>
+        </Link>
+        <nav className="hidden md:flex items-center gap-6 text-sm">
+          {navItems.map((item) => (
+            <Link key={item.to} to={item.to} className="text-white/80 hover:text-yellow-300 transition-colors">
+              {item.label}
+            </Link>
+          ))}
+          <Link to="/booking" className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-4 py-2 rounded-lg transition-colors">
+            احجز الآن
+          </Link>
+        </nav>
+      </div>
+    </header>
+  )
+}
 
-          {/* Instructions */}
-          <div className="bg-slate-800/50 backdrop-blur-sm border border-blue-500/20 rounded-2xl p-8 shadow-xl mb-6">
-            <div className="flex items-start gap-4 mb-6">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-lg flex items-center justify-center font-bold">
-                1
-              </div>
-              <div>
-                <h3 className="font-semibold text-white mb-1">Describe your idea</h3>
-                <p className="text-blue-200/80 text-sm">Use the chat panel on the left to tell the AI what you want to build</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4 mb-6">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-lg flex items-center justify-center font-bold">
-                2
-              </div>
-              <div>
-                <h3 className="font-semibold text-white mb-1">Watch it build</h3>
-                <p className="text-blue-200/80 text-sm">Your app will appear in this preview as the AI generates the code</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-lg flex items-center justify-center font-bold">
-                3
-              </div>
-              <div>
-                <h3 className="font-semibold text-white mb-1">Refine and iterate</h3>
-                <p className="text-blue-200/80 text-sm">Continue the conversation to add features and make changes</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Footer */}
-          <div className="text-center">
-            <p className="text-sm text-blue-300/60">
-              No coding required • Just describe what you want
-            </p>
-          </div>
+function Footer() {
+  return (
+    <footer className="bg-slate-950 text-white/80 border-t border-white/10 mt-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 grid md:grid-cols-4 gap-8">
+        <div>
+          <p className="text-xl font-bold text-white mb-3">Promparty Rent</p>
+          <p className="text-sm text-white/60">تأجير عقارات فاخرة في ليبيا بمعايير خدمة راقية وتجربة حجز سهلة وسريعة.</p>
+        </div>
+        <div>
+          <p className="font-semibold text-white mb-3">روابط سريعة</p>
+          <ul className="space-y-2 text-sm">
+            <li><Link to="/properties" className="hover:text-yellow-300">العقارات</Link></li>
+            <li><Link to="/services" className="hover:text-yellow-300">الخدمات</Link></li>
+            <li><Link to="/about" className="hover:text-yellow-300">من نحن</Link></li>
+            <li><Link to="/contact" className="hover:text-yellow-300">تواصل</Link></li>
+          </ul>
+        </div>
+        <div>
+          <p className="font-semibold text-white mb-3">التواصل</p>
+          <ul className="space-y-2 text-sm">
+            <li>الهاتف: +218 91 000 0000</li>
+            <li>واتساب: +218 91 000 0000</li>
+            <li>البريد: info@promparty.ly</li>
+          </ul>
+        </div>
+        <div>
+          <p className="font-semibold text-white mb-3">القانوني</p>
+          <ul className="space-y-2 text-sm">
+            <li><Link to="/terms" className="hover:text-yellow-300">الشروط والأحكام</Link></li>
+            <li><Link to="/privacy" className="hover:text-yellow-300">سياسة الخصوصية</Link></li>
+          </ul>
         </div>
       </div>
+      <div className="border-t border-white/10 py-4 text-center text-xs text-white/50">© {new Date().getFullYear()} Promparty Rent. جميع الحقوق محفوظة.</div>
+    </footer>
+  )
+}
+
+function WhatsAppFloat() {
+  const phone = '+218910000000'
+  return (
+    <a href={`https://wa.me/${phone.replace(/[^\d]/g,'')}`} target="_blank" rel="noreferrer" aria-label="WhatsApp"
+       className="fixed bottom-5 left-5 z-50 flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-3 rounded-full shadow-lg">
+      <span className="font-semibold">تواصل واتساب</span>
+    </a>
+  )
+}
+
+function App() {
+  return (
+    <div dir="rtl" className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white">
+      <ScrollToTop />
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/properties" element={<Properties />} />
+        <Route path="/properties/:id" element={<PropertyDetails />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/booking" element={<Booking />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/privacy" element={<Privacy />} />
+      </Routes>
+      <WhatsAppFloat />
+      <Footer />
     </div>
   )
 }
